@@ -1,0 +1,22 @@
+      {#- sidebar ~#}
+      <nav id="sidebar" class="fixed flex-shrink-0 lg:w-64 xl:w-80 lg:flex lg:flex-col z-30 h-screen w-full hidden bg-primary-100 dark:bg-primary-950 px-4 lg:px-6 py-4 lg:py-6 overflow-auto leading-tight">
+        {%- for group in site.sidebar ~%}
+          {%- if site.page('docs/' ~ group|slugify) ~%}
+            {%- set group_title = site.page('docs/' ~ group|slugify).title ~%}
+          {%- else ~%}
+            {%- set group_title = group ~%}
+          {%- endif ~%}
+        <h3>{{ group_title|trans }}</h3>
+        <ul>
+          {#-{%- for p in site.pages.showable|filter(p => p.path matches '{^docs/' ~ group|slugify ~ '}') ~%}~#}
+          {%- for p in site.pages.showable|filter(p => p.folder == 'docs/' ~ group|slugify) ~%}
+          <li>
+            <a href="{{ url(p) }}" class="{% if url(p) == url(page) %}active{% endif %}">{{ p.title }}</a>
+          </li>
+          {%- endfor ~%}
+        </ul>
+        {%- endfor ~%}
+        <footer class="text-sm font-thin text-slate-800 dark:text-slate-300">
+          {% trans %}Powered by{% endtrans %} <a href="{{ cecil.url }}">Cecil</a>
+        </footer>
+      </nav>

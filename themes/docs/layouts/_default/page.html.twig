@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="{{ site.language }}" class="scroll-pt-[70px] scroll-smooth overflow-y-scroll">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    {%- include 'partials/metatags.html.twig' ~%}
+    <link href="https://fonts.googleapis.com/css?family=Dosis:300,400|Open+Sans:300,400,700|Poppins:400,600&display=swap" rel="stylesheet" />
+    <style>{{ asset('styles.css')|inline }}</style>
+    <link rel="manifest" href="{{ url('manifest') }}" />
+    {%- if site.docsearch.enabled ?? false ~%}
+    <link rel="preconnect" href="https://{{ site.docsearch.appId|default }}-dsn.algolia.net" crossorigin />
+    {%- endif ~%}
+  </head>
+  <body class="font-sans antialiased bg-primary-50 dark:bg-primary-950 text-primary-950 dark:text-slate-100">
+    <header class="h-12 md:h-16 fixed top-0 inset-x-0 z-10 bg-primary-700 dark:bg-primary-900 px-4 py-3 shadow-md flex items-center">
+      {#- mobile sidebar ~#}
+      {%- if page.section == 'docs' ~%}
+      <button class="flex lg:hidden items-center text-primary-100" onclick="toggleMenu()">
+        <svg id="sidebar-svg1" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <title>Menu</title><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
+        </svg>
+        <svg id="sidebar-svg2" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 hidden">
+          <title>Menu</title><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+      {%- endif ~%}
+      {#- site title ~#}
+      <a href="{{ url(site.home) }}" title="{{ site.title }}" class="lg:w-48 inline-block text-primary-100 hover:text-primary-50 px-4 py-2 sm:mr-4 lg:mr-8 xl:mr-24 text-xl">
+        {{ site.title }}
+      </a>
+      {#- DocSearch ~#}
+      {%- if site.docsearch.enabled ?? false ~%}
+      <div id="search-container" class="md:inline-block md:px-4 py-2"></div>
+      {%- endif ~%}
+      <div class="grow"></div>
+      {#- GitHub link -#}
+      {%- if site.github.repo|default ~%}
+      <a href="{{ site.github.repo }}" title="{{ site.title }} on GitHub" class="flex text-primary-100 hover:text-primary-50 px-3 py-2 sm:mr-4 items-center">
+        <svg class="fill-current text-primary-200 w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20">
+          <title>{{ site.title }} on GitHub</title>
+          <path d="M10 0a10 10 0 0 0-3.16 19.49c.5.1.68-.22.68-.48l-.01-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.1.39-1.99 1.03-2.69a3.6 3.6 0 0 1 .1-2.64s.84-.27 2.75 1.02a9.58 9.58 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.37.2 2.4.1 2.64.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85l-.01 2.75c0 .26.18.58.69.48A10 10 0 0 0 10 0"></path>
+        </svg>
+        <span class="hidden sm:block sm:ml-2">GitHub</span>
+      </a>
+      {%- endif ~%}
+      {#- selectors ~#}
+      <div class="flex justify-end space-x-2">
+        <div class="hidden sm:block">
+          {%- include 'partials/theme-selector.html.twig' ~%}
+        </div>
+        <div>
+          {%- include 'partials/language-selector.html.twig' ~%}
+        </div>
+      </div>
+    </header>
+    <main class="flex h-full mt-12 md:mt-16">
+    {%- block content ~%}
+      {%- include 'partials/sidebar.html.twig' ~%}
+      <article class="w-full lg:ml-64 xl:ml-80 overflow-x-hidden px-4 xl:px-16 py-8">
+        {#- article content ~#}
+        <section id="content" class="markdown dark:markdown-invert max-w-none">
+          {%- block article ~%}
+          {{ page.content }}
+          {%- endblock article ~%}
+        </section>
+      </article>
+    {%- endblock content ~%}
+    </main>
+    <footer class="p-6 mx-auto font-light text-center">
+      {% trans %}Powered by{% endtrans %} <a href="{{ cecil.url }}">Cecil</a>
+    </footer>
+    {#- scripts ~#}
+    <script>
+      {%- apply minify_js ~%}
+      function toggleMenu() {
+        document.getElementById('sidebar').classList.toggle('hidden');
+        document.getElementById('sidebar-svg1').classList.toggle('hidden');
+        document.getElementById('sidebar-svg2').classList.toggle('hidden');
+      }
+      {%- endapply ~%}
+    </script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css">
+    <style>
+      {%- apply minify_css ~%}
+      .hljs {
+        background: none;
+      }
+      code.hljs {
+        padding: 0;
+      }
+      pre code.hljs {
+        padding: 0;
+      }
+      {%- endapply ~%}
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.slim.min.js" integrity="sha512-5NqgLBAYtvRsyAzAvEBWhaW+NoB+vARl6QiA02AFMhCWvPpi7RWResDcTGYvQtzsHVCfiUhwvsijP+3ixUk1xw==" crossorigin="anonymous"></script>
+    <script>
+      {%- apply minify_js ~%}
+      $(function () {
+        $('article h2, article h3').each(function () {
+          var url = document.URL.replace(/#.*$/, "") + '#' + $(this).attr('id');
+          $(this).append('<a class="title-anchor" href="' + url + '">#</a>');
+        });
+      });
+      {%- endapply ~%}
+    </script>
+    {%- if site.docsearch.enabled ?? false ~%}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"/>
+    <script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
+    <script>
+      {%- apply minify_js ~%}
+      {{- include('partials/docsearch.js.twig') ~}}
+      {%- endapply ~%}
+    </script>
+    {%- endif ~%}
+    {%- include 'partials/regsw.js.twig' ignore missing with {'site': site} only ~%}
+  </body>
+</html>

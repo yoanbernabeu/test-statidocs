@@ -1,0 +1,36 @@
+title: Statidocs
+baseline: An effective documentation
+baseurl: https://cecilapp.github.io/statidocs/
+canonicalurl: true
+description: Create and manage an effective documentation.
+author:
+  name: Arnaud Ligny
+  url: https://arnaudligny.fr
+#image: og-card.png
+language: en
+languages:
+  - code: en
+    name: English
+    locale: en
+  - code: fr
+    enabled: true
+    name: Français
+    locale: fr
+    config:
+      baseline: Une documentation efficace
+      description: Créer et gérer une documentation efficace.
+theme:
+  - docs
+  - pwa
+serviceworker:
+  enabled: true
+github:
+  repo: https://github.com/Cecilapp/statidocs
+  branch: main
+docsearch:
+  enabled: true
+  appId: R2IYF7ETH7
+  indexName: docsearch
+  apiKey: 599cec31baffa4868cae4e79f180729b
+sidebar:
+  - Demo

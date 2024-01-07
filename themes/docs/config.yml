@@ -1,0 +1,30 @@
+# Docs default config
+github:
+  repo: https://github.com/cecilapp/statidocs
+  branch: main
+docsearch:
+  enabled: false
+manifest:
+  background_color: '#EEF6FF'
+  theme_color: '#1C4ED8'
+
+# Cecil config for Docs
+pagination:
+  enabled: false
+pages:
+  sortby: weight
+  body:
+    highlight:
+      enabled: true
+    images:
+      resize:
+        enabled: true
+      webp:
+        enabled: true
+      responsive:
+        enabled: true
+      caption:
+        enabled: true
+    links:
+      embed:
+        enabled: true
